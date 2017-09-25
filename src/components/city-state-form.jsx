@@ -40,7 +40,7 @@ class CityStateForm extends Component {
           <label for="selectState" className="col-sm-2 control-label">State</label>
           <div className="col-sm-10">
             <Select
-              name="foo"
+              name="state-select"
               id="selectedState"
               placeholder="ex. MI"
               value={selectedState}
