@@ -11,6 +11,7 @@ class CityStateForm extends Component {
     city: PropTypes.string,
     weather: PropTypes.object,
     selectedState: PropTypes.string,
+    invalidCity: PropTypes.bool,
     onChangeCity: PropTypes.func,
     onChangeState: PropTypes.func,
     getWeatherData: PropTypes.func,
@@ -18,12 +19,14 @@ class CityStateForm extends Component {
   };
 
   render() {
-    const { weather, city, selectedState, onChangeCity, onChangeState, getWeatherData, resetWeatherData } = this.props;
+    const { weather, city, selectedState, onChangeCity, onChangeState, getWeatherData, resetWeatherData, invalidCity } = this.props;
 
     return (
 
+      <div>
+
       <form className="form-horizontal center-form">
-        <div className={`form-group ${weather.error ? "has-error" : ""}`}>
+        <div className={`form-group ${weather.error || invalidCity ? "has-error" : ""}`}>
           <label for="inputCity" className="col-sm-2 control-label">City</label>
           <div className="col-sm-10">
             <input
@@ -31,7 +34,7 @@ class CityStateForm extends Component {
               className="form-control input text-center"
               id="input-city"
               placeholder="ex. Detroit"
-              value={city}
+              value={decodeURI(city)}
               onChange={(e) => onChangeCity(e.target.value)}
             />
           </div>
@@ -55,6 +58,7 @@ class CityStateForm extends Component {
             <button
               type="button"
               className="btn btn-primary btn-margin"
+              disabled={invalidCity}
               onClick={() => getWeatherData()}
             >
               Submit
@@ -69,6 +73,14 @@ class CityStateForm extends Component {
           </div>
         </div>
       </form>
+
+      { invalidCity && 
+        <div>
+          <p> Invalid City. Please correct and retry. </p>
+        </div>
+      }
+
+      </div>
 
     );
   }
